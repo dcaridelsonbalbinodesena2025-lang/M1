@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K.C.M ELITE V13 - Aridelson B.</title>
+    <title>K.C.M ELITE V19 - Aridelson B.</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root { 
@@ -11,56 +11,73 @@
             --neon-green: #00ff88; 
             --neon-red: #ff3355;
             --gale: #f0b90b;
+            --sky-blue: #00d4ff;
         }
-        body { background: #05070a; color: white; font-family: 'Segoe UI', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 90vh; margin: 0; overflow: hidden; }
+        body { background: #05070a; color: white; font-family: 'Segoe UI', sans-serif; display: flex; align-items: center; justify-content: center; height: 95vh; margin: 0; overflow: hidden; }
         
         #celular { 
-            background: #111418; width: 355px; height: 630px; border-radius: 45px; border: 8px solid #2b2f36; 
-            padding: 15px; box-shadow: 0 0 60px rgba(0, 71, 171, 0.5); display: flex; flex-direction: column; position: relative;
+            background: #111418; width: 360px; height: 95%; border-radius: 40px; border: 6px solid #2b2f36; 
+            padding: 20px; box-shadow: 0 0 50px rgba(0, 71, 171, 0.4); display: flex; flex-direction: column; justify-content: space-between;
         }
 
         .header { text-align: center; margin-bottom: 5px; }
-        .logo-text { font-size: 35px; font-weight: 900; color: var(--royal-blue); text-shadow: 0 0 15px var(--royal-blue); font-style: italic; margin: 0; }
+        .logo-container { display: inline-flex; align-items: center; gap: 5px; filter: drop-shadow(0 0 12px #fff); }
+        .logo-text { font-size: 30px; font-weight: 900; color: var(--royal-blue); font-style: italic; margin: 0; text-shadow: 0 0 5px #fff; }
+        .logo-grafico { width: 45px; height: 35px; }
 
-        .termometro-container { margin: 8px 0; background: #222; height: 22px; border-radius: 50px; position: relative; overflow: hidden; border: 1px solid #444; }
-        #barra-pressao { height: 120%; width: 50%; background: var(--royal-blue); transition: 0.3s; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 18px; color: #000; }
+        .termometro-container { background: #222; height: 20px; border-radius: 8px; overflow: hidden; border: 1px solid #444; }
+        #barra-pressao { height: 90%; width: 50%; background: var(--neon-green); transition: 0.3s; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 16px; color: #000; }
 
-        #visor-velas { height: 95px; background: rgba(0,0,0,0.4); border-radius: 20px; display: flex; gap: 8px; align-items: center; justify-content: center; margin-bottom: 10px; }
-        .barra { width: 14px; height: 32px; border-radius: 3px; }
+        #visor-velas { height: 65px; background: rgba(0,0,0,0.6); border-radius: 15px; display: flex; gap: 6px; align-items: center; justify-content: center; border: 1px solid #333; margin-top: 5px; }
+        .barra { width: 14px; height: 35px; border-radius: 3px; }
 
-        #balao-instrucao { padding: 15px; border-radius: 15px; font-size: 20px; font-weight: 900; text-align: center; width: 100%; box-sizing: border-box; margin-bottom: 8px; }
+        #balao-instrucao { padding: 12px; border-radius: 12px; font-size: 19px; font-weight: 900; text-align: center; text-transform: uppercase; margin: 8px 0; min-height: 25px; transition: 0.2s; }
         
-        #status-mercado { font-size: 38px; font-weight: 900; color: #ffffff; text-transform: uppercase; text-align: center; display: block; }
-        #detalhe-estrategia { font-size: 14px; color: var(--gale); font-weight: bold; text-align: center; display: block; margin-bottom: 8px; min-height: 18px; }
+        #status-mercado { font-size: 32px; font-weight: 900; text-align: center; margin: 0; color: white; text-transform: uppercase; }
+        #detalhe-estrategia { font-size: 13px; color: var(--gale); font-weight: bold; text-align: center; min-height: 15px; text-transform: uppercase; }
 
-        #timer { font-size: 90px; font-weight: bold; margin: 0; line-height: 0.8; text-align: center; }
-        #preco { font-size: 30px; color: var(--gale); font-weight: bold; font-family: monospace; text-align: center; margin-bottom: 8px; }
+        #timer { font-size: 85px; font-weight: bold; line-height: 0.8; text-align: center; margin: 5px 0; font-variant-numeric: tabular-nums; }
+        #preco { font-size: 28px; color: var(--gale); font-weight: bold; font-family: monospace; text-align: center; }
 
-        #grafico-container { height: 100px; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 5px; }
+        #grafico-container { height: 100px; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 5px; }
 
-        #area-resultado { height: 70px; display: flex; align-items: center; justify-content: center; margin-top: 5px; }
-        .resultado-texto { font-size: 45px; font-weight: 900; text-transform: uppercase; animation: glow 0.8s infinite alternate; display: none; }
-        @keyframes glow { from { transform: scale(1); filter: brightness(1); } to { transform: scale(1.1); filter: brightness(1.5); } }
+        #area-resultado { height: 60px; display: flex; align-items: center; justify-content: center; }
+        .resultado-texto { font-size: 45px; font-weight: 900; display: none; }
 
-        .verde { background: var(--neon-green); box-shadow: 0 0 15px var(--neon-green); }
-        .vermelha { background: var(--neon-red); box-shadow: 0 0 15px var(--neon-red); }
+        .verde { background: var(--neon-green); box-shadow: 0 0 10px var(--neon-green); }
+        .vermelha { background: var(--neon-red); box-shadow: 0 0 10px var(--neon-red); }
 
-        .footer-tools { background: rgba(255,255,255,0.05); border-radius: 25px; padding: 12px; margin-top: auto; }
-        select { width: 100%; padding: 10px; background: #1a1e23; color: white; border-radius: 10px; border: none; font-weight: bold; font-size: 14px; }
+        .piscar { animation: flash 0.5s infinite; }
+        @keyframes flash { from { opacity: 1; } to { opacity: 0.5; } }
+
+        .footer-tools { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 10px; position: relative; }
+        select { width: 100%; padding: 10px; background: #1a1e23; color: white; border-radius: 8px; border: 1px solid #444; font-size: 14px; font-weight: bold; }
+        .assinatura { position: absolute; right: 15px; bottom: -20px; font-size: 11px; color: rgba(255,255,255,0.4); font-style: italic; }
     </style>
 </head>
 <body>
 
     <div id="celular">
-        <div class="header"><h1 class="logo-text">K.C📈M</h1></div>
+        <div class="header">
+            <div class="logo-container">
+                <span class="logo-text"><b>K.C</b></span>
+                <svg class="logo-grafico" viewBox="0 0 100 100">
+                    <polyline points="0,50 20,50 35,10 50,90 65,40 80,50 100,50" fill="none" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class="logo-text"><b>M</b></span>
+            </div>
+        </div>
 
         <div class="termometro-container"><div id="barra-pressao">50%</div></div>
+        
         <div id="visor-velas"></div>
 
         <div id="balao-instrucao" style="background: var(--royal-blue); color: white;">ANALISANDO...</div>
 
-        <span id="status-mercado">AGUARDE</span>
-        <span id="detalhe-estrategia">BUSCANDO PADRÕES...</span>
+        <div>
+            <div id="status-mercado">LATERAL</div>
+            <div id="detalhe-estrategia">AGUARDANDO PADRÃO...</div>
+        </div>
 
         <div id="timer">00</div>
         <div id="preco">0.00000</div>
@@ -68,8 +85,8 @@
         <div id="grafico-container"><canvas id="realTimeChart"></canvas></div>
 
         <div id="area-resultado">
-            <div id="msg-green" class="resultado-texto" style="color: var(--neon-green); text-shadow: 0 0 25px var(--neon-green);">GREEN! ✅</div>
-            <div id="msg-red" class="resultado-texto" style="color: var(--neon-red); text-shadow: 0 0 25px var(--neon-red);">RED! ❌</div>
+            <div id="msg-green" class="resultado-texto" style="color: var(--neon-green);">GREEN! ✅</div>
+            <div id="msg-red" class="resultado-texto" style="color: var(--neon-red);">RED! ❌</div>
         </div>
 
         <div class="footer-tools">
@@ -79,62 +96,47 @@
                 <span style="color:var(--neon-red)">L: <span id="reds">0</span></span>
             </div>
             <select id="moeda-select" onchange="mudarMoeda()">
-                <optgroup label="OTC - CONFORME IMAGENS">
-                    <option value="frxEURUSD">EUR / USD (OTC)</option>
-                    <option value="frxUSDBRL">USD / BRL (OTC)</option>
-                    <option value="frxUSDBDT">USD / BDT (OTC)</option>
-                    <option value="frxUSDIDR">USD / IDR (OTC)</option>
-                    <option value="frxUSDTRY">USD / TRY (OTC)</option>
-                    <option value="frxUSDARS">USD / ARS (OTC)</option>
-                    <option value="frxUSDPKR">USD / PKR (OTC)</option>
-                    <option value="frxUSDCOP">USD / COP (OTC)</option>
-                    <option value="frxEURSGD">EUR / SGD (OTC)</option>
-                    <option value="frxGBPNZD">GBP / NZD (OTC)</option>
-                    <option value="frxCADCHF">CAD / CHF (OTC)</option>
-                    <option value="frxNZDCHF">NZD / CHF (OTC)</option>
-                    <option value="frxUSDMXN">USD / MXN (OTC)</option>
-                    <option value="frxUSDPHP">USD / PHP (OTC)</option>
-                    <option value="frxUSDDZD">USD / DZD (OTC)</option>
-                    <option value="frxUSDINR">USD / INR (OTC)</option>
-                    <option value="frxUSDNGN">USD / NGN (OTC)</option>
-                </optgroup>
-                <optgroup label="PRINCIPAIS (MERCADO ABERTO)">
-                    <option value="frxUSDJPY">USD / JPY</option>
-                    <option value="frxGBPUSD">GBP / USD</option>
-                    <option value="frxAUDUSD">AUD / USD</option>
-                    <option value="frxUSDCAD">USD / CAD</option>
-                    <option value="frxUSDCHF">USD / CHF</option>
-                    <option value="frxNZDUSD">NZD / USD</option>
-                </optgroup>
+                <option value="frxEURUSD">EUR / USD (OTC)</option>
+                <option value="frxUSDJPY">USD / JPY</option>
+                <option value="frxGBPUSD">GBP / USD</option>
+                <option value="frxAUDUSD">AUD / USD</option>
+                <option value="frxUSDCAD">USD / CAD</option>
+                <option value="frxUSDCHF">USD / CHF</option>
+                <option value="frxNZDUSD">NZD / USD</option>
+                <option value="frxUSDBRL">USD / BRL (OTC)</option>
             </select>
+            <div class="assinatura">Aridelson B.</div>
         </div>
     </div>
 
     <script>
-        // A lógica do robô (Socket, Gráfico, Sinais e Estratégias) continua a mesma da V12, 
-        // apenas com a lista de ativos expandida conforme solicitado.
         let socket, precosVela = [], dadosVelas = [], historicoTicks = [];
-        let wins = 0, reds = 0, ultimoSinal = null, aguardando = false, galeCount = 0;
-        let chart, tSup = 0, tRes = 0, fechamentoAnterior = 0;
+        let wins = 0, reds = 0, ultimoSinal = null;
+        let chart;
+
+        // Inicializa com dados fictícios para não começar vazio
+        for(let i=0; i<8; i++) dadosVelas.push({cor: Math.random() > 0.5 ? 'verde' : 'vermelha'});
 
         function initChart() {
             const ctx = document.getElementById('realTimeChart').getContext('2d');
             chart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: Array(30).fill(''),
+                    labels: Array(25).fill(''),
                     datasets: [{
-                        data: Array(30).fill(null),
-                        borderColor: '#0047AB',
+                        data: Array(25).fill(null),
+                        borderColor: '#00d4ff',
                         borderWidth: 2,
                         pointRadius: 0,
                         fill: true,
-                        backgroundColor: 'rgba(0, 71, 171, 0.1)',
-                        tension: 0.3
+                        backgroundColor: 'rgba(0, 212, 255, 0.05)',
+                        tension: 0.4
                     }]
                 },
                 options: { responsive: true, maintainAspectRatio: false, scales: { y: { display: false }, x: { display: false } }, plugins: { legend: { display: false } } }
             });
+            atualizarVelas();
+            atualizarTendencia();
         }
 
         function conectar(ativo) {
@@ -145,84 +147,94 @@
                 const data = JSON.parse(msg.data);
                 if (data.tick) {
                     const preco = data.tick.quote;
-                    const segs = new Date().getSeconds();
-                    precosVela.push(preco);
+                    const s = new Date().getSeconds();
+                    
+                    if (precosVela.length === 0) precosVela.push(preco);
                     historicoTicks.push(preco);
                     if(historicoTicks.length > 50) historicoTicks.shift();
                     
-                    document.getElementById('timer').innerText = (60 - segs).toString().padStart(2, '0');
+                    document.getElementById('timer').innerText = (60 - s).toString().padStart(2, '0');
                     document.getElementById('preco').innerText = preco.toFixed(5);
-                    atualizarTermometro(preco);
+                    
+                    // Termômetro
+                    const ab = precosVela[0];
+                    const barra = document.getElementById('barra-pressao');
+                    let pct = 50 + ((preco - ab) / 0.00050 * 50);
+                    pct = Math.max(5, Math.min(95, pct));
+                    barra.style.width = pct + "%";
+                    barra.style.background = preco >= ab ? "var(--neon-green)" : "var(--neon-red)";
+                    barra.innerText = Math.round(pct) + "%";
+
                     chart.data.datasets[0].data.push(preco);
                     chart.data.datasets[0].data.shift();
                     chart.update('none');
 
-                    if (segs >= 50 && segs < 59) processarSinal(preco);
-                    if (segs === 0 && precosVela.length > 2) fecharVela(preco);
+                    // LÓGICA DE MENSAGENS E SINAIS
+                    const bSinal = document.getElementById('balao-instrucao');
+                    const dEst = document.getElementById('detalhe-estrategia');
+
+                    if (s < 50) {
+                        bSinal.innerText = "ANALISANDO...";
+                        bSinal.style.background = "var(--royal-blue)";
+                        bSinal.style.color = "white";
+                        bSinal.classList.remove('piscar');
+                        ultimoSinal = preco >= ab ? 'PUT' : 'CALL';
+                        dEst.innerText = "PROCURANDO ENTRADA...";
+                    } else if (s >= 50 && s < 58) {
+                        bSinal.innerText = `PREPARE ${ultimoSinal}`;
+                        bSinal.style.background = ultimoSinal === 'CALL' ? "var(--neon-green)" : "var(--neon-red)";
+                        bSinal.style.color = "#000";
+                        dEst.innerText = "PADRÃO IDENTIFICADO!";
+                    } else if (s >= 58) {
+                        bSinal.innerText = "ENTRE AGORA! 🔥";
+                        bSinal.classList.add('piscar');
+                        dEst.innerText = "EXECUTE A OPERAÇÃO";
+                    }
+                    
+                    if (s === 0) fecharVela(preco);
                 }
             };
-        }
-
-        function atualizarTermometro(p) {
-            const ab = precosVela[0];
-            const barra = document.getElementById('barra-pressao');
-            let pct = 50 + ((p - ab) / 0.00040 * 50);
-            pct = Math.max(5, Math.min(95, pct));
-            barra.style.width = pct + "%";
-            barra.style.background = p >= ab ? "var(--neon-green)" : "var(--neon-red)";
-            barra.innerText = Math.round(pct) + "%";
-        }
-
-        function processarSinal(p) {
-            const ab = precosVela[0];
-            const bSinal = document.getElementById('balao-instrucao');
-            const dEst = document.getElementById('detalhe-estrategia');
-            let sinal = p >= ab ? 'PUT' : 'CALL';
-            let estrategia = "PADRÃO DE REVERSÃO";
-
-            const min = Math.min(...historicoTicks);
-            const max = Math.max(...historicoTicks);
-            if (p <= min * 1.00005) { tSup++; if(tSup >= 3) { estrategia = "3º TOQUE SUPORTE"; sinal = "CALL"; } }
-            else if (p >= max * 0.99995) { tRes++; if(tRes >= 3) { estrategia = "3º TOQUE RESISTÊNCIA"; sinal = "PUT"; } }
-
-            dEst.innerText = estrategia;
-            bSinal.innerText = galeCount > 0 ? `🚨 GALE ${galeCount} - ${sinal}` : `ENTRAR EM ${sinal}`;
-            bSinal.style.background = sinal === 'CALL' ? "var(--neon-green)" : "var(--neon-red)";
-            bSinal.style.color = "#000";
-            ultimoSinal = sinal;
-            document.getElementById('msg-green').style.display = 'none';
-            document.getElementById('msg-red').style.display = 'none';
         }
 
         function fecharVela(fe) {
             const ab = precosVela[0];
             const cor = fe >= ab ? 'verde' : 'vermelha';
-            if (aguardando) {
-                const win = (ultimoSinal==='CALL' && cor==='verde') || (ultimoSinal==='PUT' && cor==='vermelha');
-                if (win) { wins++; galeCount = 0; mostrarResultado('green'); }
-                else { if(galeCount < 2) galeCount++; else { reds++; galeCount = 0; mostrarResultado('red'); } }
+            
+            if (ultimoSinal) {
+                const win = (ultimoSinal === 'CALL' && cor === 'verde') || (ultimoSinal === 'PUT' && cor === 'vermelha');
+                if (win) { wins++; mostrarResultado('green'); } else { reds++; mostrarResultado('red'); }
                 atualizarPlacar();
             }
-            aguardando = true;
-            dadosVelas.push({ cor });
+
+            dadosVelas.push({cor});
             if (dadosVelas.length > 10) dadosVelas.shift();
             atualizarVelas();
+            atualizarTendencia();
             precosVela = [];
         }
 
-        function mostrarResultado(tipo) {
-            document.getElementById('msg-green').style.display = tipo === 'green' ? 'block' : 'none';
-            document.getElementById('msg-red').style.display = tipo === 'red' ? 'block' : 'none';
+        function atualizarVelas() {
+            const container = document.getElementById('visor-velas');
+            container.innerHTML = '';
+            dadosVelas.forEach(v => {
+                const div = document.createElement('div');
+                div.className = `barra ${v.cor}`;
+                container.appendChild(div);
+            });
         }
 
-        function atualizarVelas() {
-            const c = document.getElementById('visor-velas');
-            c.innerHTML = '';
-            dadosVelas.forEach(v => {
-                const b = document.createElement('div');
-                b.className = `barra ${v.cor}`;
-                c.appendChild(b);
-            });
+        function atualizarTendencia() {
+            const ultimas = dadosVelas.slice(-3);
+            const status = document.getElementById('status-mercado');
+            if (ultimas.every(v => v.cor === 'verde')) status.innerText = "ALTA";
+            else if (ultimas.every(v => v.cor === 'vermelha')) status.innerText = "BAIXA";
+            else status.innerText = "LATERAL";
+        }
+
+        function mostrarResultado(tipo) {
+            const el = document.getElementById(tipo === 'green' ? 'msg-green' : 'msg-red');
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 3500);
         }
 
         function atualizarPlacar() {
@@ -232,9 +244,7 @@
         }
 
         function mudarMoeda() {
-            wins=0; reds=0; galeCount=0; dadosVelas=[]; precosVela=[]; historicoTicks=[]; atualizarPlacar();
-            document.getElementById('msg-green').style.display = 'none';
-            document.getElementById('msg-red').style.display = 'none';
+            wins=0; reds=0; precosVela=[]; historicoTicks=[]; atualizarPlacar();
             conectar(document.getElementById('moeda-select').value);
         }
 
